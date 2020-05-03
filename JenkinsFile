@@ -7,7 +7,7 @@ pipeline
 	 {
 	 steps
 	 {
-	 git 'https://github.com/vivalka/maven-project'
+	 git branch: 'master', url: 'https://github.com/vivalka/maven-project'
 	 }
 	 }
 	
