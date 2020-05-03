@@ -22,6 +22,8 @@ pipeline
 		}
 	 }
 	 
+	 
+	 
 	 stage("test")
 	 {
 	 steps
@@ -31,6 +33,16 @@ pipeline
 				sh 'mvn test'	
 					
 			}
+		}
+	 }
+	 
+	 stage("test")
+	 {
+	 steps
+		{
+			nodejs('LocalNode') {
+    sh 'npm publish'
+}
 		}
 	 }
 	
