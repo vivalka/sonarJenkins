@@ -6,10 +6,22 @@ pipeline
      stage("scm checkout")
 	 {
 	 steps
-	 {
-	 git branch: 'master', url: 'https://github.com/vivalka/maven-project'
+		{
+			git 'https://github.com/vivalka/maven-project'
+		}
 	 }
+	 
+	 stage("compile source code")
+	 {
+	 steps
+		{
+			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
+			{
+				sh 'mvn compile'	
+			}
+		}
 	 }
 	
-	}
+   }
+   
 }
