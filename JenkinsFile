@@ -36,16 +36,7 @@ pipeline
 		}
 	 }
 	 
-	 stage("node")
-	 {
-	 steps
-		{
-			nodejs('LocalNode') {
-    sh 'npm publish'
-}
-		}
-	 }
-	
+	 
    }
    
 }
