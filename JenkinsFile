@@ -16,14 +16,17 @@ pipeline
 	 {
 	 steps
 		{
-			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
+			
+			withSonarQubeEnv('sonar')
 			{
-			withSonarQubeEnv(credentialsId: 'jenkinssonar') {
+			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
+			{ 
 					sh 'mvn clean sonar:sonar package'
-}
-					
-					
 			}
+			}
+					
+					
+			
 		}
 	 }
 	 
