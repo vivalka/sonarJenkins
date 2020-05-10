@@ -7,21 +7,9 @@ pipeline
 	 {
 	 steps
 		{
-			git 'https://github.com/vivalka/maven-project'
+			git branch:'master' ,url: 'https://github.com/vivalka/maven-project'
 		}
 	 }
-	 
-	 stage("compile source code")
-	 {
-	 steps
-		{
-			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
-			{
-				sh 'mvn compile'	
-			}
-		}
-	 }
-	 
 	 
 	 
 	 stage("test")
@@ -30,37 +18,17 @@ pipeline
 		{
 			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
 			{
-				sh 'mvn test'	
+			withSonarQubeEnv(credentialsId: 'jenkinssonar') {
+					sh 'mvn clean sonar:sonar package'
+}
+					
 					
 			}
 		}
 	 }
 	 
-	 stage("build my job")
-	 {
-	 steps
-		{
-			withMaven(jdk: 'jdkLocal-8', maven: 'localMaven') 
-			{
-				sh 'mvn package'	
-					
-			}
-		}
-	 }
 	 
-	 stage("tomcat dev deployment")
-	 {
-	 steps
-		{
-			sshagent(['deploytomcat']) {
-    				
-    				sh 'scp -o StrictHostKeyChecking=no */target/*.war   ec2-user@18.156.163.12:/var/lib/tomcat/webapps'
-  				
-			}
-		}
-	 }
-	 
-	 
+	
    }
    
 }
